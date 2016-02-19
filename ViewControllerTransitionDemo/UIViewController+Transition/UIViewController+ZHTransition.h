@@ -10,6 +10,32 @@
 
 typedef void(^ZHViewControllerAnimateTransition)(id <UIViewControllerContextTransitioning> transitionContext, UIView *containerView, UIViewController *fromVc, UIView *fromView, UIViewController *toVc, UIView *toView);
 
+typedef enum : NSUInteger {
+    ZHTransitionTypeShow,
+    ZHTransitionTypeDismiss,
+    ZHTransitionTypeOther,
+} ZHTransitionType;
+
+#pragma mark - ZHTransitionDataSource
+@interface ZHTransitionDataSource : NSObject<UIViewControllerAnimatedTransitioning>
+
+@property (nonatomic, assign) ZHTransitionType transitionType;
+@property (nonatomic, assign) CGFloat showDuration;
+@property (nonatomic, copy) ZHViewControllerAnimateTransition showTransitionBlock;
+@property (nonatomic, copy) ZHViewControllerAnimateTransition showAnimationBlock;
+
+@property (nonatomic, assign) CGFloat dismissDuration;
+@property (nonatomic, copy) ZHViewControllerAnimateTransition dismissTransitionBlock;
+@property (nonatomic, copy) ZHViewControllerAnimateTransition dismissAnimationBlock;
+
+- (instancetype)initWithShowDuration:(CGFloat)showDuration showTransitionBlock:(ZHViewControllerAnimateTransition)showTransitionBlock showAnimationBlock:(ZHViewControllerAnimateTransition)showAnimationBlock dismissWithDuration:(CGFloat)dismissDuration dismissTransitionBlock:(ZHViewControllerAnimateTransition)dismissTransitionBlock dismissAnimationBlock:(ZHViewControllerAnimateTransition)dismissAnimationBlock;
+
++ (instancetype)transitonDataSourceWithShowDuration:(CGFloat)showDuration showTransitionBlock:(ZHViewControllerAnimateTransition)showTransitionBlock showAnimationBlock:(ZHViewControllerAnimateTransition)showAnimationBlock dismissWithDuration:(CGFloat)dismissDuration dismissTransitionBlock:(ZHViewControllerAnimateTransition)dismissTransitionBlock dismissAnimationBlock:(ZHViewControllerAnimateTransition)dismissAnimationBlock;
+
+@end
+
+#pragma mark - UIViewController + ZHTransition
+
 @interface UIViewController (ZHTransition)
 
 /**

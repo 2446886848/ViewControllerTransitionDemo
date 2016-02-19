@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC89A9A91C775FEE009DA484 /* UINavigationController+ZHTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = FC89A9A81C775FEE009DA484 /* UINavigationController+ZHTransition.m */; };
 		FCC2D43B1C76ACA800665ED2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FCC2D43A1C76ACA800665ED2 /* main.m */; };
 		FCC2D43E1C76ACA900665ED2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FCC2D43D1C76ACA900665ED2 /* AppDelegate.m */; };
 		FCC2D4411C76ACA900665ED2 /* PresentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCC2D4401C76ACA900665ED2 /* PresentViewController.m */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FC89A9A71C775FEE009DA484 /* UINavigationController+ZHTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+ZHTransition.h"; sourceTree = "<group>"; };
+		FC89A9A81C775FEE009DA484 /* UINavigationController+ZHTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+ZHTransition.m"; sourceTree = "<group>"; };
 		FCC2D4361C76ACA800665ED2 /* ViewControllerTransitionDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViewControllerTransitionDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC2D43A1C76ACA800665ED2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FCC2D43C1C76ACA800665ED2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -96,6 +99,8 @@
 			children = (
 				FCC2D4511C76AE8200665ED2 /* UIViewController+ZHTransition.h */,
 				FCC2D4521C76AE8200665ED2 /* UIViewController+ZHTransition.m */,
+				FC89A9A71C775FEE009DA484 /* UINavigationController+ZHTransition.h */,
+				FC89A9A81C775FEE009DA484 /* UINavigationController+ZHTransition.m */,
 			);
 			path = "UIViewController+Transition";
 			sourceTree = "<group>";
@@ -175,6 +180,7 @@
 				FCC2D4411C76ACA900665ED2 /* PresentViewController.m in Sources */,
 				FCC2D43E1C76ACA900665ED2 /* AppDelegate.m in Sources */,
 				FCC2D43B1C76ACA800665ED2 /* main.m in Sources */,
+				FC89A9A91C775FEE009DA484 /* UINavigationController+ZHTransition.m in Sources */,
 				FCC2D4531C76AE8200665ED2 /* UIViewController+ZHTransition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,6 +328,7 @@
 				FCC2D44F1C76ACA900665ED2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
