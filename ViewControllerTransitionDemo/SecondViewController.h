@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SecondViewController.h
 //  ViewControllerTransitionDemo
 //
 //  Created by 吴志和 on 16/2/19.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface SecondViewController : UIViewController
 
+@property (nonatomic, strong) UIImageView *imageView;
 
 @end
-
