@@ -17,6 +17,7 @@
 		FCC2D4531C76AE8200665ED2 /* UIViewController+ZHTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = FCC2D4521C76AE8200665ED2 /* UIViewController+ZHTransition.m */; };
 		FCC2D4551C76B56700665ED2 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FCC2D4541C76B56700665ED2 /* 1.jpg */; };
 		FCC2D4581C76B5AC00665ED2 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCC2D4571C76B5AC00665ED2 /* SecondViewController.m */; };
+		FCC2D45B1C77FF1700665ED2 /* PushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCC2D45A1C77FF1700665ED2 /* PushViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,8 @@
 		FCC2D4541C76B56700665ED2 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		FCC2D4561C76B5AC00665ED2 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		FCC2D4571C76B5AC00665ED2 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		FCC2D4591C77FF1700665ED2 /* PushViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushViewController.h; sourceTree = "<group>"; };
+		FCC2D45A1C77FF1700665ED2 /* PushViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +79,8 @@
 				FCC2D4401C76ACA900665ED2 /* PresentViewController.m */,
 				FCC2D4561C76B5AC00665ED2 /* SecondViewController.h */,
 				FCC2D4571C76B5AC00665ED2 /* SecondViewController.m */,
+				FCC2D4591C77FF1700665ED2 /* PushViewController.h */,
+				FCC2D45A1C77FF1700665ED2 /* PushViewController.m */,
 				FCC2D4421C76ACA900665ED2 /* Main.storyboard */,
 				FCC2D4541C76B56700665ED2 /* 1.jpg */,
 				FCC2D4451C76ACA900665ED2 /* Assets.xcassets */,
@@ -181,6 +186,7 @@
 				FCC2D43E1C76ACA900665ED2 /* AppDelegate.m in Sources */,
 				FCC2D43B1C76ACA800665ED2 /* main.m in Sources */,
 				FC89A9A91C775FEE009DA484 /* UINavigationController+ZHTransition.m in Sources */,
+				FCC2D45B1C77FF1700665ED2 /* PushViewController.m in Sources */,
 				FCC2D4531C76AE8200665ED2 /* UIViewController+ZHTransition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

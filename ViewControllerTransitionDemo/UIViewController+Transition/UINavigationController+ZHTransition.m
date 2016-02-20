@@ -11,7 +11,7 @@
 
 @interface ZHPushTransitionBind : NSObject
 
-@property (nonatomic, strong) UIViewController *viewController;
+@property (nonatomic, weak) UIViewController *viewController;
 
 @property (nonatomic, strong) ZHTransitionDataSource *pushDataSource;
 
@@ -51,16 +51,32 @@
 - (void)addPushDataSource:(ZHTransitionDataSource *)pushDataSource forViewController:(UIViewController *)viewController
 {
     ZHPushTransitionBind *pushTransitionBind = [ZHPushTransitionBind pushTransitionBindWithViewController:viewController pushDataSource:pushDataSource];
+    
+    //执行清理操作
+    NSMutableArray *garbageBinds = @[].mutableCopy;
+    for (ZHPushTransitionBind *bind in [self pushTransitonBinds]) {
+        if (!bind.viewController) {
+            [garbageBinds addObject:bind];
+        }
+    }
+    [[self pushTransitonBinds] removeObjectsInArray:garbageBinds];
+    
     [[self pushTransitonBinds] addObject:pushTransitionBind];
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
 {
     for (ZHPushTransitionBind *pushTransitionBind in [self pushTransitonBinds]) {
-        if ((operation == UINavigationControllerOperationPush
-             && pushTransitionBind.viewController == toVC) ||
-            (operation == UINavigationControllerOperationPop
-             && pushTransitionBind.viewController == fromVC)) {
+        if (operation == UINavigationControllerOperationPush
+             && pushTransitionBind.viewController == toVC && pushTransitionBind.pushDataSource.showTransitionBlock) {
+            pushTransitionBind.pushDataSource.transitionType = ZHTransitionTypeShow;
+            return pushTransitionBind.pushDataSource;
+        }
+        else if (operation == UINavigationControllerOperationPop
+                 && pushTransitionBind.viewController == fromVC
+                 && pushTransitionBind.pushDataSource.dismissTransitionBlock)
+        {
+            pushTransitionBind.pushDataSource.transitionType = ZHTransitionTypeDismiss;
             return pushTransitionBind.pushDataSource;
         }
     }
