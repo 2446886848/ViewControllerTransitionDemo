@@ -157,7 +157,7 @@
 {
     ZHTransitionDelegate *transitionDelegate = [[ZHTransitionDelegate alloc] init];
     transitionDelegate.transitionDataSource = [ZHTransitionDataSource transitonDataSourceWithShowDuration:presentDuration showTransitionBlock:presentTransitionBlock showAnimationBlock:presentAnimationBlock dismissWithDuration:dismissDuration dismissTransitionBlock:dismissTransitionBlock dismissAnimationBlock:dismissAnimationBlock];
-    self.modalPresentationStyle = UIModalPresentationCustom;
+    self.modalPresentationStyle = UIModalPresentationFullScreen;
     [self setCustomTransitioningDelegate:transitionDelegate];
     self.transitioningDelegate = transitionDelegate;
 }
