@@ -141,6 +141,8 @@
         }];
     } dismissWithDuration:dismissDuration dismissTransitionBlock:^(id<UIViewControllerContextTransitioning> transitionContext, UIView *containerView, UIViewController *fromVc, UIView *fromView, UIViewController *toVc, UIView *toView) {
         
+        [containerView addSubview:toView];
+        
         UIImageView *selectedImageView = [(PresentViewController *)[(UINavigationController *)toVc topViewController] selectedImageView];
         
         UIImageView *fromImageView = [(SecondViewController *)fromVc imageView];
@@ -183,6 +185,7 @@
         fromView.alpha = 0;
         toView.alpha = 1.0;
     } dismissWithDuration:dismissDuration dismissTransitionBlock:^(id<UIViewControllerContextTransitioning> transitionContext, UIView *containerView, UIViewController *fromVc, UIView *fromView, UIViewController *toVc, UIView *toView) {
+        [containerView addSubview:toView];
         fromView.alpha = 1.0;
         toView.alpha = 0;
     } dismissAnimationBlock:^(id<UIViewControllerContextTransitioning> transitionContext, UIView *containerView, UIViewController *fromVc, UIView *fromView, UIViewController *toVc, UIView *toView) {
@@ -233,6 +236,8 @@
             }];
         });
     } dismissWithDuration:dismissDuration dismissTransitionBlock:^(id<UIViewControllerContextTransitioning> transitionContext, UIView *containerView, UIViewController *fromVc, UIView *fromView, UIViewController *toVc, UIView *toView) {
+        
+        [containerView addSubview:toView];
         
         UIGraphicsBeginImageContextWithOptions(fromView.bounds.size, NO, [UIScreen mainScreen].scale);
         [fromView drawViewHierarchyInRect:fromView.bounds afterScreenUpdates:NO];
