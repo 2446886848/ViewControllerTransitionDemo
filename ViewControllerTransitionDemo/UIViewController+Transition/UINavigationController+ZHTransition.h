@@ -23,7 +23,7 @@
  *  @param dismissTransitionBlock 消失动画开始直行至的操作
  *  @param dismissAnimationBlock  消失动画的内容
  */
-- (void)zh_addpushTransitonForViewController:(UIViewController *)viewController pushDuration:(CGFloat)pushDuration pushTransitionBlock:(ZHViewControllerAnimateTransition)pushTransitionBlock pushAnimationBlock:(ZHViewControllerAnimateTransition)pushAnimationBlock dismissWithDuration:(CGFloat)dismissDuration dismissTransitionBlock:(ZHViewControllerAnimateTransition)dismissTransitionBlock dismissAnimationBlock:(ZHViewControllerAnimateTransition)dismissAnimationBlock;
+- (void)zh_addPushTransitonForViewController:(UIViewController *)viewController pushDuration:(CGFloat)pushDuration pushTransitionBlock:(ZHViewControllerAnimateTransition)pushTransitionBlock pushAnimationBlock:(ZHViewControllerAnimateTransition)pushAnimationBlock dismissWithDuration:(CGFloat)dismissDuration dismissTransitionBlock:(ZHViewControllerAnimateTransition)dismissTransitionBlock dismissAnimationBlock:(ZHViewControllerAnimateTransition)dismissAnimationBlock;
 
 /**
  *  为UINavigationController增加push转场动画，自定义动画的内容
@@ -34,6 +34,13 @@
  *  @param dismissDuration        消失动画时长
  *  @param dismissTransitionBlock 消失动画开始直行至的操作
  */
-- (void)zh_addpushTransitonForViewController:(UIViewController *)viewController pushDuration:(CGFloat)pushDuration pushTransitionBlock:(ZHViewControllerAnimateTransition)pushTransitionBlock dismissWithDuration:(CGFloat)dismissDuration dismissTransitionBlock:(ZHViewControllerAnimateTransition)dismissTransitionBlock;
+- (void)zh_addPushTransitonForViewController:(UIViewController *)viewController pushDuration:(CGFloat)pushDuration pushTransitionBlock:(ZHViewControllerAnimateTransition)pushTransitionBlock dismissWithDuration:(CGFloat)dismissDuration dismissTransitionBlock:(ZHViewControllerAnimateTransition)dismissTransitionBlock;
+
+/**
+ *  删除对一个特定viewController的push转场动效
+ *
+ *  @param viewController 要处理的viewController
+ */
+- (void)zh_removePushTransitonForViewController:(UIViewController *)viewController;
 
 @end

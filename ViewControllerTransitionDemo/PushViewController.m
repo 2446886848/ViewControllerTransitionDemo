@@ -104,7 +104,7 @@
 {
     SecondViewController *secondVc = [[SecondViewController alloc] init];
     
-    [self.navigationController zh_addpushTransitonForViewController:secondVc pushDuration:1.0 pushTransitionBlock:^(id<UIViewControllerContextTransitioning> transitionContext, UIView *containerView, UIViewController *fromVc, UIView *fromView, UIViewController *toVc, UIView *toView) {
+    [self.navigationController zh_addPushTransitonForViewController:secondVc pushDuration:1.0 pushTransitionBlock:^(id<UIViewControllerContextTransitioning> transitionContext, UIView *containerView, UIViewController *fromVc, UIView *fromView, UIViewController *toVc, UIView *toView) {
         containerView.backgroundColor = [UIColor whiteColor];
         [containerView addSubview:toView];
         fromView.alpha = 1.0;
@@ -120,6 +120,7 @@
         fromView.alpha = 0.0;
         toView.alpha = 1.0;
     }];
+    
     [self.navigationController pushViewController:secondVc animated:YES];
 }
 - (void)flipPresention
@@ -127,7 +128,7 @@
     SecondViewController *secondVc = [[SecondViewController alloc] init];
     
     __block UIColor *superViewBackgroundColor = nil;
-    [self.navigationController zh_addpushTransitonForViewController:secondVc pushDuration:1.0 pushTransitionBlock:^(id<UIViewControllerContextTransitioning> transitionContext, UIView *containerView, UIViewController *fromVc, UIView *fromView, UIViewController *toVc, UIView *toView) {
+    [self.navigationController zh_addPushTransitonForViewController:secondVc pushDuration:1.0 pushTransitionBlock:^(id<UIViewControllerContextTransitioning> transitionContext, UIView *containerView, UIViewController *fromVc, UIView *fromView, UIViewController *toVc, UIView *toView) {
         
         //保留旧的背景色
         superViewBackgroundColor = [containerView superview].backgroundColor;

@@ -42,7 +42,10 @@
 @interface ZHPushDelegate : NSObject<UINavigationControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *pushTransitonBinds;
+
 - (void)addPushDataSource:(ZHTransitionDataSource *)dataSource forViewController:(UIViewController *)viewController;
+
+- (void)removePushDataSourceForViewController:(UIViewController *)viewController;
 
 @end
 
@@ -62,6 +65,18 @@
     [[self pushTransitonBinds] removeObjectsInArray:garbageBinds];
     
     [[self pushTransitonBinds] addObject:pushTransitionBind];
+}
+
+- (void)removePushDataSourceForViewController:(UIViewController *)viewController
+{
+    NSMutableArray *viewControllerBinds = @[].mutableCopy;
+    
+    for (ZHPushTransitionBind *bind in [self pushTransitonBinds]) {
+        if (bind.viewController == viewController) {
+            [viewControllerBinds addObject:bind];
+        }
+    }
+    [[self pushTransitonBinds] removeObjectsInArray:viewControllerBinds];
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
@@ -95,7 +110,7 @@
 
 @implementation UINavigationController (ZHTransition)
 
-- (void)zh_addpushTransitonForViewController:(UIViewController *)viewController pushDuration:(CGFloat)pushDuration pushTransitionBlock:(ZHViewControllerAnimateTransition)pushTransitionBlock pushAnimationBlock:(ZHViewControllerAnimateTransition)pushAnimationBlock dismissWithDuration:(CGFloat)dismissDuration dismissTransitionBlock:(ZHViewControllerAnimateTransition)dismissTransitionBlock dismissAnimationBlock:(ZHViewControllerAnimateTransition)dismissAnimationBlock
+- (void)zh_addPushTransitonForViewController:(UIViewController *)viewController pushDuration:(CGFloat)pushDuration pushTransitionBlock:(ZHViewControllerAnimateTransition)pushTransitionBlock pushAnimationBlock:(ZHViewControllerAnimateTransition)pushAnimationBlock dismissWithDuration:(CGFloat)dismissDuration dismissTransitionBlock:(ZHViewControllerAnimateTransition)dismissTransitionBlock dismissAnimationBlock:(ZHViewControllerAnimateTransition)dismissAnimationBlock
 {
     ZHPushDelegate *pushDelegate = [self pushDelegate];
     ZHTransitionDataSource *pushDataSource = [ZHTransitionDataSource transitonDataSourceWithShowDuration:pushDuration showTransitionBlock:pushTransitionBlock showAnimationBlock:pushAnimationBlock dismissWithDuration:dismissDuration dismissTransitionBlock:dismissTransitionBlock dismissAnimationBlock:dismissAnimationBlock];
@@ -104,9 +119,14 @@
     self.delegate = pushDelegate;
 }
 
-- (void)zh_addpushTransitonForViewController:(UIViewController *)viewController pushDuration:(CGFloat)pushDuration pushTransitionBlock:(ZHViewControllerAnimateTransition)pushTransitionBlock dismissWithDuration:(CGFloat)dismissDuration dismissTransitionBlock:(ZHViewControllerAnimateTransition)dismissTransitionBlock
+- (void)zh_addPushTransitonForViewController:(UIViewController *)viewController pushDuration:(CGFloat)pushDuration pushTransitionBlock:(ZHViewControllerAnimateTransition)pushTransitionBlock dismissWithDuration:(CGFloat)dismissDuration dismissTransitionBlock:(ZHViewControllerAnimateTransition)dismissTransitionBlock
 {
-    [self zh_addpushTransitonForViewController:viewController pushDuration:pushDuration pushTransitionBlock:pushTransitionBlock pushAnimationBlock:nil dismissWithDuration:dismissDuration dismissTransitionBlock:dismissTransitionBlock dismissAnimationBlock:nil];
+    [self zh_addPushTransitonForViewController:viewController pushDuration:pushDuration pushTransitionBlock:pushTransitionBlock pushAnimationBlock:nil dismissWithDuration:dismissDuration dismissTransitionBlock:dismissTransitionBlock dismissAnimationBlock:nil];
+}
+
+- (void)zh_removePushTransitonForViewController:(UIViewController *)viewController
+{
+    [[self pushDelegate] removePushDataSourceForViewController:viewController];
 }
 
 - (void)setPushDelegate:(ZHPushDelegate *)pushDelegate
