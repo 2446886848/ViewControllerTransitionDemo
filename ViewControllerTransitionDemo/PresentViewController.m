@@ -199,75 +199,32 @@
 - (void)flipPresention
 {
     SecondViewController *secondVc = [[SecondViewController alloc] init];
-    CGFloat presentDuration = 2.0;
+    CGFloat presentDuration = 1.0;
     CGFloat dismissDuration = 1.0;
     
     [secondVc zh_addPresentTransitonWithDuration:presentDuration presentTransitionBlock:^(id<UIViewControllerContextTransitioning> transitionContext, UIView *containerView, UIViewController *fromVc, UIView *fromView, UIViewController *toVc, UIView *toView) {
         
-        [containerView addSubview:toView];
-        
-        UIGraphicsBeginImageContextWithOptions(fromView.bounds.size, NO, [UIScreen mainScreen].scale);
-        [fromView drawViewHierarchyInRect:fromView.bounds afterScreenUpdates:NO];
-        UIImage *fromViewImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        UIGraphicsBeginImageContextWithOptions(toView.bounds.size, NO, [UIScreen mainScreen].scale);
-        [toView drawViewHierarchyInRect:toView.bounds afterScreenUpdates:YES];
-        UIImage *toViewImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        fromView.hidden = YES;
-        toView.hidden = YES;
-        containerView.backgroundColor = [UIColor whiteColor];
-        
-        UIImageView *flipImageView = [[UIImageView alloc] initWithFrame:containerView.bounds];
-        flipImageView.image = fromViewImage;
-        [containerView addSubview:flipImageView];
-
         CGFloat dispatchAfterTime = 0.01;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(dispatchAfterTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [UIView transitionWithView:flipImageView duration:presentDuration - dispatchAfterTime options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
-                flipImageView.image = toViewImage;
+            UIColor *transitionOldColor = containerView.superview.backgroundColor;
+            containerView.superview.backgroundColor = [UIColor whiteColor];
+            [UIView transitionWithView:containerView duration:presentDuration - dispatchAfterTime options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+                [containerView addSubview:toView];
             } completion:^(BOOL finished) {
-                [flipImageView removeFromSuperview];
-                fromView.hidden = NO;
-                toView.hidden = NO;
                 [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+                containerView.superview.backgroundColor = transitionOldColor;
             }];
         });
     } dismissWithDuration:dismissDuration dismissTransitionBlock:^(id<UIViewControllerContextTransitioning> transitionContext, UIView *containerView, UIViewController *fromVc, UIView *fromView, UIViewController *toVc, UIView *toView) {
         
-        [containerView addSubview:toView];
-        
-        UIGraphicsBeginImageContextWithOptions(fromView.bounds.size, NO, [UIScreen mainScreen].scale);
-        [fromView drawViewHierarchyInRect:fromView.bounds afterScreenUpdates:NO];
-        UIImage *fromViewImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        UIGraphicsBeginImageContextWithOptions(toView.bounds.size, NO, [UIScreen mainScreen].scale);
-        [toView drawViewHierarchyInRect:toView.bounds afterScreenUpdates:YES];
-        UIImage *toViewImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        fromView.hidden = YES;
-        toView.hidden = YES;
-        containerView.backgroundColor = [UIColor whiteColor];
-        
-        UIImageView *flipImageView = [[UIImageView alloc] initWithFrame:containerView.bounds];
-        flipImageView.image = fromViewImage;
-        [containerView addSubview:flipImageView];
-        
-        CGFloat dispatchAfterTime = 0.01;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(dispatchAfterTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [UIView transitionWithView:flipImageView duration:presentDuration - dispatchAfterTime options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
-                flipImageView.image = toViewImage;
-            } completion:^(BOOL finished) {
-                [flipImageView removeFromSuperview];
-                fromView.hidden = NO;
-                toView.hidden = NO;
-                [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-            }];
-        });
+        UIColor *transitionOldColor = containerView.superview.backgroundColor;
+        containerView.superview.backgroundColor = [UIColor whiteColor];
+        [UIView transitionWithView:containerView duration:dismissDuration options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
+            [containerView addSubview:toView];
+        } completion:^(BOOL finished) {
+            [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+            containerView.superview.backgroundColor = transitionOldColor;
+        }];
     }];
     
     [self.navigationController presentViewController:secondVc animated:YES completion:nil];
