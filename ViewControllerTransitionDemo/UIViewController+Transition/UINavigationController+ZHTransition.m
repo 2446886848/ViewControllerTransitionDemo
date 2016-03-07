@@ -9,39 +9,9 @@
 #import "UINavigationController+ZHTransition.h"
 #import <objc/runtime.h>
 
-@interface ZHPushTransitionBind : NSObject
-
-@property (nonatomic, weak) UIViewController *viewController;
-
-@property (nonatomic, strong) ZHTransitionDataSource *pushDataSource;
-
-- (instancetype)initWithViewController:(UIViewController *)viewController pushDataSource:(ZHTransitionDataSource *)pushDataSource;
-
-+ (instancetype)pushTransitionBindWithViewController:(UIViewController *)viewController pushDataSource:(ZHTransitionDataSource *)pushDataSource;
-
-@end
-
-@implementation ZHPushTransitionBind
-
-- (instancetype)initWithViewController:(UIViewController *)viewController pushDataSource:(ZHTransitionDataSource *)pushDataSource
-{
-    if (self = [super init]) {
-        _viewController = viewController;
-        _pushDataSource = pushDataSource;
-    }
-    return self;
-}
-
-+ (instancetype)pushTransitionBindWithViewController:(UIViewController *)viewController pushDataSource:(ZHTransitionDataSource *)pushDataSource
-{
-    return [[self alloc] initWithViewController:viewController pushDataSource:pushDataSource];
-}
-
-@end
-
 @interface ZHPushDelegate : NSObject<UINavigationControllerDelegate>
 
-@property (nonatomic, strong) NSMutableArray *pushTransitonBinds;
+@property (nonatomic, strong) NSMapTable *pushTransitonMapTable;
 
 - (void)addPushDataSource:(ZHTransitionDataSource *)dataSource forViewController:(UIViewController *)viewController;
 
@@ -53,57 +23,43 @@
 
 - (void)addPushDataSource:(ZHTransitionDataSource *)pushDataSource forViewController:(UIViewController *)viewController
 {
-    ZHPushTransitionBind *pushTransitionBind = [ZHPushTransitionBind pushTransitionBindWithViewController:viewController pushDataSource:pushDataSource];
-    
-    //执行清理操作
-    NSMutableArray *garbageBinds = @[].mutableCopy;
-    for (ZHPushTransitionBind *bind in [self pushTransitonBinds]) {
-        if (!bind.viewController) {
-            [garbageBinds addObject:bind];
-        }
-    }
-    [[self pushTransitonBinds] removeObjectsInArray:garbageBinds];
-    
-    [[self pushTransitonBinds] addObject:pushTransitionBind];
+    [self.pushTransitonMapTable setObject:pushDataSource forKey:viewController];
 }
 
 - (void)removePushDataSourceForViewController:(UIViewController *)viewController
 {
-    NSMutableArray *viewControllerBinds = @[].mutableCopy;
-    
-    for (ZHPushTransitionBind *bind in [self pushTransitonBinds]) {
-        if (bind.viewController == viewController) {
-            [viewControllerBinds addObject:bind];
-        }
-    }
-    [[self pushTransitonBinds] removeObjectsInArray:viewControllerBinds];
+    [self.pushTransitonMapTable removeObjectForKey:viewController];
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
 {
-    for (ZHPushTransitionBind *pushTransitionBind in [self pushTransitonBinds]) {
-        if (operation == UINavigationControllerOperationPush
-             && pushTransitionBind.viewController == toVC && pushTransitionBind.pushDataSource.showTransitionBlock) {
-            pushTransitionBind.pushDataSource.transitionType = ZHTransitionTypeShow;
-            return pushTransitionBind.pushDataSource;
+    ZHTransitionDataSource *dataSource = nil;
+    
+    if (operation == UINavigationControllerOperationPush)
+    {
+        dataSource = [self.pushTransitonMapTable objectForKey:toVC];
+        if (dataSource && dataSource.showTransitionBlock) {
+            dataSource.transitionType = ZHTransitionTypeShow;
+            return dataSource;
         }
-        else if (operation == UINavigationControllerOperationPop
-                 && pushTransitionBind.viewController == fromVC
-                 && pushTransitionBind.pushDataSource.dismissTransitionBlock)
-        {
-            pushTransitionBind.pushDataSource.transitionType = ZHTransitionTypeDismiss;
-            return pushTransitionBind.pushDataSource;
+    }
+    else if (operation == UINavigationControllerOperationPop)
+    {
+        dataSource = [self.pushTransitonMapTable objectForKey:fromVC];
+        if (dataSource && dataSource.dismissTransitionBlock) {
+            dataSource.transitionType = ZHTransitionTypeDismiss;
+            return dataSource;
         }
     }
     return nil;
 }
 
-- (NSMutableArray *)pushTransitonBinds
+- (NSMapTable *)pushTransitonMapTable
 {
-    if (!_pushTransitonBinds) {
-        _pushTransitonBinds = @[].mutableCopy;
+    if (!_pushTransitonMapTable) {
+        _pushTransitonMapTable = [NSMapTable weakToStrongObjectsMapTable];
     }
-    return _pushTransitonBinds;
+    return _pushTransitonMapTable;
 }
 
 @end

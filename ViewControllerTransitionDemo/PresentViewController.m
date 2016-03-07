@@ -270,7 +270,7 @@
         });
     }];
     
-    [self presentViewController:secondVc animated:YES completion:nil];
+    [self.navigationController presentViewController:secondVc animated:YES completion:nil];
 }
 
 #pragma mark - getter and setter
